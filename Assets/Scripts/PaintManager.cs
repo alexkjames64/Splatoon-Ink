@@ -5,6 +5,8 @@ public class PaintManager : Singleton<PaintManager>{
 
     public Shader texturePaint;
     public Shader extendIslands;
+    public Material sampleMaterial;
+
 
     int prepareUVID = Shader.PropertyToID("_PrepareUV");
     int positionID = Shader.PropertyToID("_PainterPosition");
@@ -79,6 +81,53 @@ public class PaintManager : Singleton<PaintManager>{
 
         Graphics.ExecuteCommandBuffer(command);
         command.Clear();
+    }
+
+    public void colHere(Paintable paintable, Vector2 pos)
+    {
+        RenderTexture mask = paintable.getMask();
+        //Debug.Log("Before:" + pos.x);
+        int x = Mathf.FloorToInt(pos.x * mask.width);
+        int y = Mathf.FloorToInt(pos.y * mask.height);
+
+
+
+        Color pixelColor = colorSample(mask, pos);
+
+        if(pixelColor.a <= 0.2f)
+        {
+            Debug.Log("not in goop:");
+        }
+        else
+        {
+            Debug.Log("in goop:" + pixelColor);
+        }
+        //Debug.Log($"RenderTexture pixel color at hit point: {pixelColor}");
+    }
+
+    public Color colorSample(RenderTexture source, Vector2 uv)
+    {
+       
+        RenderTexture rt = RenderTexture.GetTemporary(1, 1, 0, RenderTextureFormat.ARGB32);
+        RenderTexture.active = rt;
+
+        sampleMaterial.SetTexture("_MainTex", source);
+        sampleMaterial.SetVector("_UV", new Vector4(uv.x, uv.y, 0, 0));
+
+        // Blit to sample just 1 pixel
+        Graphics.Blit(null, rt, sampleMaterial);
+
+        Texture2D tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
+        tex.ReadPixels(new Rect(0, 0, 1, 1), 0, 0);
+        tex.Apply();
+
+        Color sampledColor = tex.GetPixel(0, 0);
+
+        RenderTexture.ReleaseTemporary(rt);
+        Object.Destroy(tex);
+        RenderTexture.active = null;
+
+        return sampledColor;
     }
 
 }

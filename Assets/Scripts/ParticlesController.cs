@@ -22,6 +22,7 @@ public class ParticlesController: MonoBehaviour{
     }
 
     void OnParticleCollision(GameObject other) {
+        Debug.Log("paint!");
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
 
         Paintable p = other.GetComponent<Paintable>();
