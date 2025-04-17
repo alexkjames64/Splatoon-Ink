@@ -5,8 +5,12 @@ public class Paintable : MonoBehaviour {
 
     public float extendsIslandOffset = 1;
 
+    public Renderer[] renderers;
+    public Material[] materials;
+
     RenderTexture extendIslandsRenderTexture;
     RenderTexture uvIslandsRenderTexture;
+    RenderTexture uvIslands2RenderTexture;
     RenderTexture maskRenderTexture;
     RenderTexture supportTexture;
     
@@ -21,6 +25,12 @@ public class Paintable : MonoBehaviour {
     public Renderer getRenderer() => rend;
 
     void Start() {
+
+        //debug
+        renderers = GetComponentsInChildren<Renderer>();
+        materials = renderers[0].materials;
+
+
         maskRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
         maskRenderTexture.filterMode = FilterMode.Bilinear;
 
@@ -37,6 +47,11 @@ public class Paintable : MonoBehaviour {
         rend.material.SetTexture(maskTextureID, extendIslandsRenderTexture);
 
         PaintManager.instance.initTextures(this);
+
+        Debug.Log("HI!");
+       
+        var mesh = GetComponent<MeshFilter>().mesh;
+        Debug.Log(mesh.name + " has " + mesh.subMeshCount + " submeshes!");
     }
 
     void OnDisable(){
