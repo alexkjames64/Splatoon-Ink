@@ -50,7 +50,7 @@ public class PaintManager : Singleton<PaintManager>{
 
         for (int i = 0; i < rend.materials.Length; i++)
         {
-            command.DrawRenderer(rend, paintMaterial, i);
+           // command.DrawRenderer(rend, paintMaterial, i);
         }
 
         //find all of renderes submeshes and draw on them.

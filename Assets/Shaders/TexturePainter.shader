@@ -38,6 +38,14 @@
             float mask(float3 position, float3 center, float radius, float hardness){
                 float m = distance(center, position);
                 return 1 - smoothstep(radius * hardness, radius, m);    
+
+
+                //this makes it square
+
+
+                // float2 delta = abs(center.xz - position.xz); // XZ assumes top-down; use XY if you're painting on walls
+               // float squareFalloff = max(delta.x, delta.y);
+               // return 1 - smoothstep(radius * hardness, radius, squareFalloff);
             }
 
             v2f vert (appdata v){
