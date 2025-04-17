@@ -36,6 +36,7 @@ public class PaintManager : Singleton<PaintManager>{
     public void initTextures(Paintable paintable){
         RenderTexture mask = paintable.getMask();
         RenderTexture uvIslands = paintable.getUVIslands();
+        RenderTexture uvIslands2 = paintable.getUVIslands2();
         RenderTexture extend = paintable.getExtend();
         RenderTexture support = paintable.getSupport();
         Renderer rend = paintable.getRenderer();
@@ -46,7 +47,14 @@ public class PaintManager : Singleton<PaintManager>{
 
         paintMaterial.SetFloat(prepareUVID, 1);
         command.SetRenderTarget(uvIslands);
-        command.DrawRenderer(rend, paintMaterial, 0);
+
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
+            command.DrawRenderer(rend, paintMaterial, i);
+        }
+
+        //find all of renderes submeshes and draw on them.
+        //HERE
 
         Graphics.ExecuteCommandBuffer(command);
         command.Clear();
@@ -65,13 +73,21 @@ public class PaintManager : Singleton<PaintManager>{
         paintMaterial.SetFloat(hardnessID, hardness);
         paintMaterial.SetFloat(strengthID, strength);
         paintMaterial.SetFloat(radiusID, radius);
-        paintMaterial.SetTexture(textureID, support);
+        paintMaterial.SetTexture(textureID, support); //this might be setting texture? Do for each??
         paintMaterial.SetColor(colorID, color ?? Color.red);
         extendMaterial.SetFloat(uvOffsetID, paintable.extendsIslandOffset);
         extendMaterial.SetTexture(uvIslandsID, uvIslands);
 
         command.SetRenderTarget(mask);
-        command.DrawRenderer(rend, paintMaterial, 0);
+
+        //For each submesh, 
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
+            command.DrawRenderer(rend, paintMaterial, i);
+        }
+        
+        //command.DrawRenderer(rend, paintMaterial, 0);
+        //command.DrawRenderer(rend, paintMaterial, 1);
 
         command.SetRenderTarget(support);
         command.Blit(mask, support);

@@ -6,7 +6,7 @@ public class Paintable : MonoBehaviour {
     public float extendsIslandOffset = 1;
 
     public Renderer[] renderers;
-    public Material[] materials;
+    public Material[] materialsInRend;
 
     RenderTexture extendIslandsRenderTexture;
     RenderTexture uvIslandsRenderTexture;
@@ -20,6 +20,10 @@ public class Paintable : MonoBehaviour {
 
     public RenderTexture getMask() => maskRenderTexture;
     public RenderTexture getUVIslands() => uvIslandsRenderTexture;
+
+    //debug
+    public RenderTexture getUVIslands2() => uvIslands2RenderTexture;
+
     public RenderTexture getExtend() => extendIslandsRenderTexture;
     public RenderTexture getSupport() => supportTexture;
     public Renderer getRenderer() => rend;
@@ -28,7 +32,7 @@ public class Paintable : MonoBehaviour {
 
         //debug
         renderers = GetComponentsInChildren<Renderer>();
-        materials = renderers[0].materials;
+        materialsInRend = renderers[0].materials;
 
 
         maskRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
@@ -40,12 +44,21 @@ public class Paintable : MonoBehaviour {
         uvIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
         uvIslandsRenderTexture.filterMode = FilterMode.Bilinear;
 
+        uvIslands2RenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
+        uvIslands2RenderTexture.filterMode = FilterMode.Bilinear;
+
         supportTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
         supportTexture.filterMode =  FilterMode.Bilinear;
 
         rend = GetComponent<Renderer>();
-        rend.material.SetTexture(maskTextureID, extendIslandsRenderTexture);
 
+        //for all submeshes/materials in renderer, set the maskTexture
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
+            rend.materials[i].SetTexture(maskTextureID, extendIslandsRenderTexture);
+        }
+        rend.material.SetTexture(maskTextureID, extendIslandsRenderTexture);
+        
         PaintManager.instance.initTextures(this);
 
         Debug.Log("HI!");
