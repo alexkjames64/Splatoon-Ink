@@ -2,6 +2,7 @@
 
     Properties{
         _PainterColor ("Painter Color", Color) = (0, 0, 0, 0)
+        _MainTex ("My Texture", 2D) = "white" {}
     }
 
     SubShader{
@@ -23,6 +24,7 @@
             float _Strength;
             float4 _PainterColor;
             float _PrepareUV;
+            sampler2D _MyTexture;
 
             struct appdata{
                 float4 vertex : POSITION;

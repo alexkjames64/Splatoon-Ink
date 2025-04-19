@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Paintable : MonoBehaviour {
     const int TEXTURE_SIZE = 1024;
-
+    public bool KeepMask; //makes object keep mask on startup, use for places that should start painted
+    public Texture2D MaskTexture;
+    public RenderTexture CurrentMask;
     public float extendsIslandOffset = 1;
 
     public Renderer[] renderers;
@@ -28,27 +30,41 @@ public class Paintable : MonoBehaviour {
     public RenderTexture getSupport() => supportTexture;
     public Renderer getRenderer() => rend;
 
+    public int getTextureSize() => TEXTURE_SIZE;
     void Start() {
 
         //debug
         renderers = GetComponentsInChildren<Renderer>();
         materialsInRend = renderers[0].materials;
 
+        
+            //this all happens if there is no render texture given to start with
+            maskRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
+            maskRenderTexture.filterMode = FilterMode.Bilinear;
 
-        maskRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        maskRenderTexture.filterMode = FilterMode.Bilinear;
+            extendIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
+            extendIslandsRenderTexture.filterMode = FilterMode.Bilinear;
 
-        extendIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        extendIslandsRenderTexture.filterMode = FilterMode.Bilinear;
+            uvIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
+            uvIslandsRenderTexture.filterMode = FilterMode.Bilinear;
 
-        uvIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        uvIslandsRenderTexture.filterMode = FilterMode.Bilinear;
+            uvIslands2RenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
+            uvIslands2RenderTexture.filterMode = FilterMode.Bilinear;
 
-        uvIslands2RenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        uvIslands2RenderTexture.filterMode = FilterMode.Bilinear;
+            supportTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
+            supportTexture.filterMode = FilterMode.Bilinear;
 
-        supportTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        supportTexture.filterMode =  FilterMode.Bilinear;
+
+        if (MaskTexture != null)
+        {
+            Graphics.Blit(MaskTexture, maskRenderTexture);
+            Graphics.Blit(MaskTexture, extendIslandsRenderTexture);
+            Graphics.Blit(MaskTexture, uvIslandsRenderTexture);
+            Graphics.Blit(MaskTexture, uvIslands2RenderTexture);
+            Graphics.Blit(MaskTexture, supportTexture);
+            
+        }
+
 
         rend = GetComponent<Renderer>();
 
@@ -57,7 +73,7 @@ public class Paintable : MonoBehaviour {
         {
             rend.materials[i].SetTexture(maskTextureID, extendIslandsRenderTexture);
         }
-        rend.material.SetTexture(maskTextureID, extendIslandsRenderTexture);
+       // rend.material.SetTexture(maskTextureID, extendIslandsRenderTexture);
         
         PaintManager.instance.initTextures(this);
 
@@ -68,6 +84,7 @@ public class Paintable : MonoBehaviour {
     }
 
     void OnDisable(){
+        
         maskRenderTexture.Release();
         uvIslandsRenderTexture.Release();
         extendIslandsRenderTexture.Release();

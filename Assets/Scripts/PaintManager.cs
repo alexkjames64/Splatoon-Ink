@@ -50,7 +50,7 @@ public class PaintManager : Singleton<PaintManager>{
 
         for (int i = 0; i < rend.materials.Length; i++)
         {
-           // command.DrawRenderer(rend, paintMaterial, i);
+            command.DrawRenderer(rend, paintMaterial, i);
         }
 
         //find all of renderes submeshes and draw on them.
@@ -86,6 +86,45 @@ public class PaintManager : Singleton<PaintManager>{
             command.DrawRenderer(rend, paintMaterial, i);
         }
         
+        //command.DrawRenderer(rend, paintMaterial, 0);
+        //command.DrawRenderer(rend, paintMaterial, 1);
+
+        command.SetRenderTarget(support);
+        command.Blit(mask, support);
+
+        command.SetRenderTarget(extend);
+        command.Blit(mask, extend, extendMaterial);
+
+        Graphics.ExecuteCommandBuffer(command);
+        command.Clear();
+    }
+
+    public void paintWithBrush(Material brush, Paintable paintable, Vector3 pos, float radius = 1f, float hardness = .5f, float strength = .5f, Color? color = null)
+    {
+        RenderTexture mask = paintable.getMask();
+        RenderTexture uvIslands = paintable.getUVIslands();
+        RenderTexture extend = paintable.getExtend();
+        RenderTexture support = paintable.getSupport();
+        Renderer rend = paintable.getRenderer();
+
+        brush.SetFloat(prepareUVID, 0);
+        brush.SetVector(positionID, pos);
+        brush.SetFloat(hardnessID, hardness);
+        brush.SetFloat(strengthID, strength);
+        brush.SetFloat(radiusID, radius);
+        brush.SetTexture(textureID, support); //this might be setting texture? Do for each??
+        brush.SetColor(colorID, color ?? Color.red);
+        brush.SetFloat(uvOffsetID, paintable.extendsIslandOffset);
+        brush.SetTexture(uvIslandsID, uvIslands);
+
+        command.SetRenderTarget(mask);
+
+        //For each submesh, 
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
+            command.DrawRenderer(rend, paintMaterial, i);
+        }
+
         //command.DrawRenderer(rend, paintMaterial, 0);
         //command.DrawRenderer(rend, paintMaterial, 1);
 
