@@ -36,7 +36,7 @@ public class PaintManager : Singleton<PaintManager>{
     public void initTextures(Paintable paintable){
         RenderTexture mask = paintable.getMask();
         RenderTexture uvIslands = paintable.getUVIslands();
-        RenderTexture uvIslands2 = paintable.getUVIslands2();
+       
         RenderTexture extend = paintable.getExtend();
         RenderTexture support = paintable.getSupport();
         Renderer rend = paintable.getRenderer();
@@ -86,6 +86,45 @@ public class PaintManager : Singleton<PaintManager>{
             command.DrawRenderer(rend, paintMaterial, i);
         }
         
+        //command.DrawRenderer(rend, paintMaterial, 0);
+        //command.DrawRenderer(rend, paintMaterial, 1);
+
+        command.SetRenderTarget(support);
+        command.Blit(mask, support);
+
+        command.SetRenderTarget(extend);
+        command.Blit(mask, extend, extendMaterial);
+
+        Graphics.ExecuteCommandBuffer(command);
+        command.Clear();
+    }
+
+    public void paintWater(Paintable paintable, Vector3 pos, float radius = 1f, float hardness = .5f, float strength = .5f, Color? color = null)
+    {
+        RenderTexture mask = paintable.getMask();
+        RenderTexture uvIslands = paintable.getUVIslands();
+        RenderTexture extend = paintable.getExtend();
+        RenderTexture support = paintable.getSupport();
+        Renderer rend = paintable.getRenderer();
+
+        paintMaterial.SetFloat(prepareUVID, 0);
+        paintMaterial.SetVector(positionID, pos);
+        paintMaterial.SetFloat(hardnessID, hardness);
+        paintMaterial.SetFloat(strengthID, strength);
+        paintMaterial.SetFloat(radiusID, radius);
+        paintMaterial.SetTexture(textureID, support); //this might be setting texture? Do for each??
+        paintMaterial.SetColor(colorID, color ?? Color.red);
+        extendMaterial.SetFloat(uvOffsetID, paintable.extendsIslandOffset);
+        extendMaterial.SetTexture(uvIslandsID, uvIslands);
+
+        command.SetRenderTarget(mask);
+
+        //For each submesh, 
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
+            command.DrawRenderer(rend, paintMaterial, i);
+        }
+
         //command.DrawRenderer(rend, paintMaterial, 0);
         //command.DrawRenderer(rend, paintMaterial, 1);
 

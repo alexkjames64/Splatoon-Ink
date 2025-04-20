@@ -12403,7 +12403,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869074592}
-  m_LocalRotation: {x: 0.09110295, y: 0.039373446, z: -0.0036048586, w: 0.9950563}
+  m_LocalRotation: {x: 0.09097315, y: 0.06610593, z: -0.0060523683, w: 0.99363846}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12840,7 +12840,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906262002}
-  m_LocalRotation: {x: 0.054897472, y: 0.039478406, z: -0.002172241, w: 0.9977089}
+  m_LocalRotation: {x: 0.05481925, y: 0.06628217, z: -0.0036470792, w: 0.9962872}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -18161,7 +18161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeepMask: 1
-  MaskTexture: {fileID: 2800000, guid: f254ba9fc2c848f45831e5c26e472d0b, type: 3}
+  MaskTexture: {fileID: 2800000, guid: dd5f7e4fe77fde04e8ff9d848e97f721, type: 3}
   CurrentMask: {fileID: 0}
   extendsIslandOffset: 1
   renderers: []
@@ -29172,7 +29172,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.091102935, y: 0.039373446, z: -0.0036048584, w: 0.9950563}
+  m_LocalRotation: {x: 0.09097316, y: 0.06610594, z: -0.006052369, w: 0.9936384}
   m_LocalPosition: {x: 0, y: 2.5, z: -7.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -31196,7 +31196,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101118512}
-  m_LocalRotation: {x: 0.09110299, y: 0.039373446, z: -0.0036048603, w: 0.9950563}
+  m_LocalRotation: {x: 0.09097315, y: 0.06610593, z: -0.0060523683, w: 0.99363846}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

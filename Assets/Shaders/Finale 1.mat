@@ -108,6 +108,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_7ed82481daef4018ab2a8e37967bcfed_Out_0:
+        m_Texture: {fileID: 2800000, guid: dd5f7e4fe77fde04e8ff9d848e97f721, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_cd3c960ef05b41abbbf0cb8d1275b3e0_Out_0:
+        m_Texture: {fileID: 2800000, guid: dd5f7e4fe77fde04e8ff9d848e97f721, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_fc710dccf46545b2a619e92bfc703a0f_Out_0:
+        m_Texture: {fileID: 2800000, guid: dd5f7e4fe77fde04e8ff9d848e97f721, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -142,6 +154,7 @@ Material:
     - Vector1_71856bc080f14c76be66fcafb0316622: 0
     - Vector1_7bf270fe91494824b4209d2dc1faae23: 0.5
     - Vector1_8: 0
+    - Vector1_84bd71e0b3aa45e1b1f1d69fa81fac03: 0.1
     - Vector1_8e760635099b4147956bb9600d13cac2: 0.1
     - Vector1_9: 40
     - Vector1_97871a4ca3e8483b9f22478dcbdaf209: -0.025
