@@ -6535,6 +6535,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   FireForward: 0
+  paintMaterial: {fileID: 2100000, guid: 2cf5778549dc3f44594fc738787d1926, type: 2}
 --- !u!4 &576868337
 Transform:
   m_ObjectHideFlags: 0

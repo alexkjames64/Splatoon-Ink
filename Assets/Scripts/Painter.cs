@@ -14,6 +14,7 @@ public class Painter : MonoBehaviour
 
     public bool FireForward;
 
+    public Material paintMaterial;
     private Vector3 fireDirection;
     // Start is called before the first frame update
     void Start() 
